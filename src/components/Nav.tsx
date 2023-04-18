@@ -37,12 +37,12 @@ export const Nav = () => {
           ))}
         </div>
         <div className="flex flex-1 items-center justify-end gap-x-6">
-          <a
-            href="#"
+          <Link
+            href="/app"
             className="rounded-md bg-[#2463eb] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#2463eb] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Enter App
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button

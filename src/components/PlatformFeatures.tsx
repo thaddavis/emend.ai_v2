@@ -30,7 +30,7 @@ import thermometer from "@/images/icons/metrics/svg/thermometer.svg";
 import flooding from "@/images/icons/coasts/flooding.svg";
 import biodiversity from "@/images/icons/coasts/biodiversity.svg";
 
-const issues = [
+const features = [
   {
     name: "Metrics",
     key: "2022-04-04",
@@ -140,12 +140,12 @@ export function PlatformFeatures() {
             <Tab.List className="grid auto-cols-auto grid-flow-col justify-start gap-x-8 gap-y-10 whitespace-nowrap px-4 sm:mx-auto sm:max-w-2xl sm:grid-cols-3 sm:px-0 sm:text-center lg:grid-flow-row lg:grid-cols-1 lg:text-left">
               {/* @ts-ignore: */}
               {({ selectedIndex }) =>
-                issues.map((day, dayIndex) => (
-                  <div key={day.key} className="relative lg:pl-8">
+                features.map((item, itemIndex) => (
+                  <div key={item.key} className="relative lg:pl-8">
                     <DiamondIcon
                       className={clsx(
                         "absolute left-[-0.5px] top-[0.5625rem] hidden h-1.5 w-1.5 overflow-visible lg:block",
-                        dayIndex === selectedIndex
+                        itemIndex === selectedIndex
                           ? "fill-blue-600 stroke-blue-600"
                           : "fill-transparent stroke-slate-400"
                       )}
@@ -154,14 +154,14 @@ export function PlatformFeatures() {
                       <div
                         className={clsx(
                           "font-mono text-sm",
-                          dayIndex === selectedIndex
+                          itemIndex === selectedIndex
                             ? "text-blue-600"
                             : "text-slate-500"
                         )}
                       >
                         <Tab className="[&:not(:focus-visible)]:focus:outline-none">
                           <span className="absolute inset-0" />
-                          {day.name}
+                          {item.name}
                         </Tab>
                       </div>
                     </div>
@@ -171,14 +171,14 @@ export function PlatformFeatures() {
             </Tab.List>
           </div>
           <Tab.Panels className="lg:col-span-3">
-            {issues.map((day) => (
+            {features.map((item) => (
               <Tab.Panel
-                key={day.key}
+                key={item.key}
                 className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 sm:gap-y-16 md:grid-cols-3 [&:not(:focus-visible)]:focus:outline-none"
                 unmount={false}
               >
-                {day.dimensions.map((speaker, speakerIndex) => (
-                  <div key={speakerIndex}>
+                {item.dimensions.map((subItem, subItemIndex) => (
+                  <div key={subItemIndex}>
                     <div className="group relative h-[17.5rem] transform overflow-hidden rounded-4xl">
                       <div
                         className={clsx(
@@ -187,31 +187,28 @@ export function PlatformFeatures() {
                             "border-blue-300",
                             "border-indigo-300",
                             "border-sky-300",
-                          ][speakerIndex % 3]
+                          ][subItemIndex % 3]
                         )}
                       />
                       <div
                         className="absolute inset-0 bg-indigo-50"
-                        style={{ clipPath: `url(#${id}-${speakerIndex % 3})` }}
+                        style={{ clipPath: `url(#${id}-${subItemIndex % 3})` }}
                         onClick={() => {
                           router.push("/charts.html");
                         }}
                       >
                         <Image
                           className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
-                          src={speaker.image}
-                          alt=""
+                          src={subItem.image}
+                          alt={subItem.name}
                           priority
                           sizes="(min-width: 1280px) 17.5rem, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
                         />
                       </div>
                     </div>
                     <h3 className="mt-8 font-display text-xl font-bold tracking-tight text-slate-900">
-                      {speaker.name}
+                      {subItem.name}
                     </h3>
-                    {/* <p className="mt-1 text-base tracking-tight text-slate-500">
-                      {speaker.role}
-                    </p> */}
                   </div>
                 ))}
               </Tab.Panel>

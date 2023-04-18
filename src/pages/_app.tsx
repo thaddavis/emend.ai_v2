@@ -1,5 +1,6 @@
 import "@/styles/normalize.css";
 import "@/styles/globals.css";
+import "@/styles/floating-nav.css";
 
 import type { AppProps } from "next/app";
 
