@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef } from "react";
 
 interface SvgProps extends ComponentPropsWithoutRef<"svg"> {
-  className: string;
+  className?: string;
 }
 
 export function Logo(props: SvgProps) {
