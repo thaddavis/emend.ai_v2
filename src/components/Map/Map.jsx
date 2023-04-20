@@ -7,6 +7,7 @@ import { callAI } from "./helpers/callAI";
 
 import { Modal } from "../Modal";
 import { FlyoutMenu } from "../FlyoutMenu";
+import { SideDrawer } from "../SideDrawer";
 import { Loader } from "../Loader";
 import map from "./world.json";
 
@@ -28,6 +29,8 @@ export const Map = () => {
     isModalOpen: false,
     promptTemplate: "",
   });
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const mapStateRef = React.useRef();
 
@@ -70,7 +73,8 @@ export const Map = () => {
                 projection,
                 AIresp.val,
                 mapStateRef.current,
-                size
+                size,
+                setIsDrawerOpen
               );
             }, 16);
             lazyzoom();
@@ -100,7 +104,15 @@ export const Map = () => {
       .translate([size.width / 2, size.height / 2]);
 
     drawMap(d3, svg, map, projection, AIresp.val, mapStateRef.current, size);
-    drawMatches(d3, svg, projection, AIresp.val, mapStateRef.current, size);
+    drawMatches(
+      d3,
+      svg,
+      projection,
+      AIresp.val,
+      mapStateRef.current,
+      size,
+      setIsDrawerOpen
+    );
   }, [size, AIresp]);
 
   useEffect(() => {
@@ -245,6 +257,13 @@ export const Map = () => {
           id="chart-area"
           ref={rootRef}
         ></div>
+
+        <SideDrawer
+          isOpen={isDrawerOpen}
+          setIsOpen={setIsDrawerOpen}
+          content={[]}
+          results={AIresp.val || []}
+        />
       </div>
     </>
   );

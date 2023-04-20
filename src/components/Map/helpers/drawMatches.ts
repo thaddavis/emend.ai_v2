@@ -7,7 +7,8 @@ export function drawMatches(
   size: {
     width: number;
     height: number;
-  }
+  },
+  setIsDrawerOpen: (isOpen: boolean) => {}
 ) {
   d3.select("#chart-area").selectAll("#query-matches").remove();
   d3.select("#chart-area").selectAll("#chart-tooltip").remove();
@@ -157,6 +158,7 @@ export function drawMatches(
         })
         .on("click", (evt: any) => {
           console.log("click");
+          setIsDrawerOpen(true);
         })
         .attr("cx", function (d: any) {
           return projection([d.lon, d.lat])[0];
@@ -164,7 +166,7 @@ export function drawMatches(
         .attr("cy", function (d: any) {
           return projection([d.lon, d.lat])[1];
         })
-        .attr("r", 5 / ((svgTransform && svgTransform.k) || 1))
+        .attr("r", 8 / ((svgTransform && svgTransform.k) || 1))
         .attr("fill", function (d: any) {
           return "rgba(36, 99, 235, 1.0)";
         })
