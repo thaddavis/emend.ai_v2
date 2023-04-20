@@ -194,7 +194,7 @@ export function PlatformFeatures() {
                         className="absolute inset-0 bg-indigo-50"
                         style={{ clipPath: `url(#${id}-${subItemIndex % 3})` }}
                         onClick={() => {
-                          router.push("/charts.html");
+                          router.push("/charts");
                         }}
                       >
                         <Image

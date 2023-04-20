@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Logo } from "./Logo";
 
 const navigation = [
-  { name: "Charts", href: "/charts" },
+  // { name: "Charts", href: "/charts" },
   { name: "Sensors", href: "/sensors" },
 ];
 

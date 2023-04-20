@@ -13,6 +13,7 @@ import map from "./world.json";
 import debounce from "lodash/debounce";
 
 import AI from "@/images/icons/ai.svg";
+import { drawMatches } from "./helpers/drawMatches";
 
 export const Map = () => {
   const rootRef = useRef(null);
@@ -30,6 +31,9 @@ export const Map = () => {
 
   const mapStateRef = React.useRef();
 
+  let svg;
+  let projection;
+
   useEffect(() => {
     if (!size) {
       return;
@@ -40,7 +44,7 @@ export const Map = () => {
 
     const { width, height } = size;
 
-    const svg = d3
+    svg = d3
       .select("#chart-area")
       .append("svg")
       .attr("width", width)
@@ -58,14 +62,18 @@ export const Map = () => {
         d3
           .zoom()
           .on("zoom", function (event) {
-            // console.log("event", event);
-
             let lazyzoom = debounce(function () {
               svg.attr("transform", event.transform);
-            }, 500);
-
+              drawMatches(
+                d3,
+                svg,
+                projection,
+                AIresp.val,
+                mapStateRef.current,
+                size
+              );
+            }, 16);
             lazyzoom();
-            // svg.attr("transform", event.transform);
             mapStateRef.current = event.transform;
           })
           .scaleExtent([1, 10])
@@ -85,16 +93,84 @@ export const Map = () => {
         ? size.width / size.height
         : size.height / size.width;
 
-    let projection = d3
+    projection = d3
       .geoMercator()
       .fitSize([size.width * scaleFactor, size.height * scaleFactor], map)
       .center([0, 0])
       .translate([size.width / 2, size.height / 2]);
 
-    drawMap(d3, svg, map, projection, AIresp.val, mapStateRef.current);
+    drawMap(d3, svg, map, projection, AIresp.val, mapStateRef.current, size);
+    drawMatches(d3, svg, projection, AIresp.val, mapStateRef.current, size);
   }, [size, AIresp]);
 
-  console.log("AIresp.loading", AIresp.loading);
+  useEffect(() => {
+    var panelTriggers = document.getElementsByClassName("js-cd-panel-trigger");
+    if (panelTriggers.length > 0) {
+      for (var i = 0; i < panelTriggers.length; i++) {
+        (function (i) {
+          var panelClass =
+              "js-cd-panel-" + panelTriggers[i].getAttribute("data-panel"),
+            panel = document.getElementsByClassName(panelClass)[0];
+          // open panel when clicking on trigger btn
+          panelTriggers[i].addEventListener("click", function (event) {
+            if (
+              hasClass(event.target, "js-cd-close") ||
+              hasClass(event.target, panelClass)
+            ) {
+              event.preventDefault();
+              removeClass(panel, "cd-panel--is-visible");
+
+              let el1 = document.querySelector("#ribbon");
+              removeClass(el1, "js-cd-close");
+              el1.textContent = "+";
+            } else {
+              addClass(panel, "cd-panel--is-visible");
+
+              let el1 = document.querySelector("#ribbon");
+              addClass(el1, "js-cd-close");
+              el1.textContent = "-";
+            }
+          });
+
+          //close panel when clicking on 'x' or outside the panel
+          panel.addEventListener("click", function (event) {
+            if (
+              hasClass(event.target, "js-cd-close") ||
+              hasClass(event.target, panelClass)
+            ) {
+              event.preventDefault();
+              removeClass(panel, "cd-panel--is-visible");
+
+              let el = document.querySelector("#ribbon");
+              removeClass(el, "js-cd-close");
+              el.textContent = "+";
+            }
+          });
+        })(i);
+      }
+    }
+
+    //class manipulations - needed if classList is not supported
+    //https://jaketrent.com/post/addremove-classes-raw-javascript/
+    function hasClass(el, className) {
+      if (el.classList) return el.classList.contains(className);
+      else
+        return !!el.className.match(
+          new RegExp("(\\s|^)" + className + "(\\s|$)")
+        );
+    }
+    function addClass(el, className) {
+      if (el.classList) el.classList.add(className);
+      else if (!hasClass(el, className)) el.className += " " + className;
+    }
+    function removeClass(el, className) {
+      if (el.classList) el.classList.remove(className);
+      else if (hasClass(el, className)) {
+        var reg = new RegExp("(\\s|^)" + className + "(\\s|$)");
+        el.className = el.className.replace(reg, " ");
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -119,34 +195,38 @@ export const Map = () => {
         isModalOpen={modalState.isModalOpen}
         promptTemplate={modalState.promptTemplate}
         setModalState={setModalState}
-        callAI={async (promptTemplate, queryContent) => {
-          console.log("calling A.I.", promptTemplate);
+        callAI={async (queryContent) => {
+          try {
+            console.log("calling A.I.", queryContent);
 
-          setModalState({
-            isModalOpen: false,
-            promptTemplate: "",
-          });
+            setModalState({
+              isModalOpen: false,
+              promptTemplate: "",
+            });
 
-          setAIresp({
-            value: null,
-            loading: true,
-            error: null,
-          });
+            setAIresp({
+              value: null,
+              loading: true,
+              error: null,
+            });
 
-          // const res = await callAI(promptTemplate, queryContent);
+            const results = await callAI(queryContent);
 
-          setAIresp({
-            val: [
-              {
-                lon: -80.1918,
-                lat: 25.7617,
-                blurb:
-                  "Miami is a coastal city located in Florida. It is know for its beautiful beaches, lavish lifestyle, and nightlife.",
-              },
-            ],
-            loading: false,
-            error: null,
-          });
+            // console.log("*** results ***", results);
+
+            setAIresp({
+              val: results,
+              loading: false,
+              error: null,
+            });
+          } catch (e) {
+            console.error(e);
+            setAIresp({
+              val: [],
+              loading: false,
+              error: e,
+            });
+          }
         }}
       />
       <div
