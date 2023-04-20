@@ -233,6 +233,18 @@ export const Map = () => {
             });
           } catch (e) {
             console.error(e);
+
+            toast.error("Error fetching results for query", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+
             setAIresp({
               val: [],
               loading: false,

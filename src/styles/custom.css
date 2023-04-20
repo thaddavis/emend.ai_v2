@@ -28,3 +28,18 @@
     transform: rotate(360deg);
   }
 }
+
+#chart-tooltip {
+  /* basic */
+  background-color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  /* border-radius */
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  /* box-shadow */
+  -webkit-box-shadow: rgba(0, 0, 0, 0.8) 0px 0 4px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.8) 0 0 4px;
+  box-shadow: rgba(0, 0, 0, 0.8) 0 0 4px;
+}

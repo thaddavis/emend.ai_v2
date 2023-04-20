@@ -7,7 +7,7 @@ import { Logo } from "./Logo";
 
 const navigation = [
   // { name: "Charts", href: "/charts" },
-  { name: "Sensors", href: "/sensors" },
+  // { name: "Sensors", href: "/sensors" },
 ];
 
 export const Nav = () => {

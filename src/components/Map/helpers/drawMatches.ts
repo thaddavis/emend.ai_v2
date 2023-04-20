@@ -35,7 +35,7 @@ export function drawMatches(
       .attr("id", "chart-tooltip")
       .style("background-color", "white")
       .style("border-radius", "5px")
-      .style("border", "3px solid #2463eb")
+      .style("border", "2px solid #2463eb")
       .style("padding", "1em")
       .style("margin", "1em")
       .style("color", "black");
@@ -120,39 +120,7 @@ export function drawMatches(
 
           showTooltip(evt, matches[i], hPlacement, vPlacement);
         })
-        .on("mousemove", (evt: any) => {
-          //   let hPlacement: {
-          //     placement: "left" | "right";
-          //     offset: number;
-          //   };
-          //   let vPlacement: {
-          //     placement: "top" | "bottom";
-          //     offset: number;
-          //   };
-          //   if (size.width / 2 < evt.clientX) {
-          //     hPlacement = {
-          //       placement: "right",
-          //       offset: size.width - evt.clientX,
-          //     };
-          //   } else {
-          //     hPlacement = {
-          //       placement: "left",
-          //       offset: evt.clientX,
-          //     };
-          //   }
-          //   if (size.height / 2 < evt.clientY) {
-          //     vPlacement = {
-          //       placement: "bottom",
-          //       offset: size.height - evt.clientY,
-          //     };
-          //   } else {
-          //     vPlacement = {
-          //       placement: "top",
-          //       offset: evt.clientY,
-          //     };
-          //   }
-          //   moveTooltip(evt, hPlacement, vPlacement);
-        })
+        .on("mousemove", (evt: any) => {})
         .on("mouseleave", (evt: any) => {
           hideTooltip(evt);
         })

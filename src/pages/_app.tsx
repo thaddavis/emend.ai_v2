@@ -1,6 +1,7 @@
 import "@/styles/normalize.css";
 import "@/styles/globals.css";
 import "@/styles/custom.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import type { AppProps } from "next/app";
 
