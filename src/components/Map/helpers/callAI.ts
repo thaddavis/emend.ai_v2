@@ -21,7 +21,8 @@ export async function callAI(prompt: string) {
     var config = {
       method: "post",
       // url: 'https://us-central1-aiot-fit-xlab.cloudfunctions.net/emend',
-      url: "http://localhost:5000",
+      // url: "http://localhost:5000",
+      url: "/api/queryAI",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",

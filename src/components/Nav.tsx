@@ -5,10 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Logo } from "./Logo";
 
-const navigation = [
-  // { name: "Charts", href: "/charts" },
-  // { name: "Sensors", href: "/sensors" },
-];
+// const navigation = [
+// { name: "Charts", href: "/charts" },
+// { name: "Sensors", href: "/sensors" },
+// ];
 
 export const Nav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -26,7 +26,7 @@ export const Nav = () => {
           </Link>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
+          {/* {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
@@ -34,7 +34,7 @@ export const Nav = () => {
             >
               {item.name}
             </Link>
-          ))}
+          ))} */}
         </div>
         <div className="flex flex-1 items-center justify-end gap-x-6">
           <Link
@@ -85,7 +85,7 @@ export const Nav = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6">
               <div className="space-y-2 py-6">
-                {navigation.map((item) => (
+                {/* {navigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
@@ -93,7 +93,7 @@ export const Nav = () => {
                   >
                     {item.name}
                   </a>
-                ))}
+                ))} */}
               </div>
               <div className="py-6">
                 {/* <a

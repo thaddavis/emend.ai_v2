@@ -69,11 +69,11 @@ export function SideDrawer(props: P) {
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">
                       {results.map((val, idx) => {
                         return (
-                          <>
+                          <div key={idx + 1}>
                             <br />
                             <h6>{idx + 1}.</h6>
                             <p key={idx}>{val.blurb}</p>
-                          </>
+                          </div>
                         );
                       })}
                     </div>
