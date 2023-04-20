@@ -67,12 +67,12 @@ export const Nav = () => {
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Emend.ai</span>
             </Link>
-            <a
-              href="#"
+            <Link
+              href="/app"
               className="ml-auto rounded-md bg-[#2463eb] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#2463eb] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Enter App
-            </a>
+            </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
