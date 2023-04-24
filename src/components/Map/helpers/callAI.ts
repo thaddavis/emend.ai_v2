@@ -21,7 +21,7 @@ export async function callAI(prompt: string) {
     };
     var config = {
       method: "post",
-      url: "https://s1vpd61w24.execute-api.us-east-1.amazonaws.com/queryAI",
+      url: "https://s1vpd61w24.execute-api.us-east-1.amazonaws.com/queryAI-v2",
       headers: {
         "Content-Type": "application/json",
       },
@@ -31,13 +31,17 @@ export async function callAI(prompt: string) {
 
     console.log("res", res);
 
-    if (isString(res.data)) {
+    if (
+      isString(res.data) &&
+      res.data[res.data.length] !== "]" &&
+      res.data[res.data.length - 1] !== "}"
+    ) {
       console.log("isString TRUE");
 
       return cleanOverflow(res.data);
     } else {
       console.log("isString FALSE");
-      return res.data;
+      return JSON.parse(res.data);
     }
   } catch (e) {
     console.error(e);
