@@ -9,24 +9,21 @@ function cleanOverflow(rawResp: string) {
   console.log("rawResp", rawResp);
   const index = rawResp.lastIndexOf("{");
 
-  console.log("-_-", rawResp.substring(0, index - 2) + "}]");
-  return JSON.parse(rawResp.substring(0, index - 2) + "}]");
+  // console.log("-_-", rawResp.substring(0, index - 2) + "}]");
+  // return JSON.parse(rawResp.substring(0, index - 2) + "}]");
+  return JSON.parse(rawResp);
 }
 
 export async function callAI(prompt: string) {
   try {
-    var data = JSON.stringify({
+    var data = {
       prompt,
-    });
+    };
     var config = {
       method: "post",
-      // url: 'https://us-central1-aiot-fit-xlab.cloudfunctions.net/emend',
-      // url: "http://localhost:5000",
-      url: "/api/queryAI",
+      url: "https://s1vpd61w24.execute-api.us-east-1.amazonaws.com/queryAI",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST",
       },
       data: data,
     };

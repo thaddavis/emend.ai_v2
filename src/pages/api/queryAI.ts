@@ -17,10 +17,6 @@ export default async function handler(
       return;
     }
 
-    const body = req.body;
-
-    console.log("body.prompt", body, body.prompt);
-
     const llm = new OpenAI({
       openAIApiKey: process.env.OPENAI_API_KEY,
       temperature: 0.0,
@@ -47,12 +43,9 @@ export default async function handler(
       template: formatted_template,
     });
 
-    console.log("prompt_tmplt", prompt_tmplt);
-
     // --- --- ---
 
     const prompt_selector = new LengthBasedExampleSelector({
-      // examples: examples,
       examplePrompt: prompt_tmplt,
     });
 
@@ -68,12 +61,9 @@ export default async function handler(
         '[{{"lon":30.482,"lat":15.775,"blurb":"Lut Desert, Iran, holds the record for the highest temperature ever recorded on Earth. The surface temperature reached a staggering 159.3°F (70.7°C) in 2005. The region is characterized by a lack of vegetation, extreme aridity, and harsh living conditions. The primary environmental concern in the Lut Desert is desertification, which exacerbates water scarcity and threatens the fragile ecosystems."}}]',
     });
 
-    console.log("prompt_selector", prompt_selector);
-
     // --- --- ---
 
     const dynamic_prompt = new FewShotPromptTemplate({
-      // examples: examples,
       examplePrompt: prompt_tmplt,
       exampleSelector: prompt_selector,
       prefix: "Answer each query",
@@ -82,10 +72,8 @@ export default async function handler(
       exampleSeparator: "\n\n",
     });
 
-    const prompt = await dynamic_prompt.format({ input: body.prompt });
-
+    const prompt = await dynamic_prompt.format({ input: req.body.prompt });
     const resp = await llm.call(prompt);
-
     res.status(200).send(resp);
   } catch (e) {
     res.status(500).send("ERROR");

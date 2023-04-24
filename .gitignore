@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# ssl
+/READMEs/www_emend_ai
+
 # production
 /build
 
@@ -32,4 +35,3 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
