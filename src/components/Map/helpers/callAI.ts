@@ -10,8 +10,7 @@ function cleanOverflow(rawResp: string) {
   const index = rawResp.lastIndexOf("{");
 
   // console.log("-_-", rawResp.substring(0, index - 2) + "}]");
-  // return JSON.parse(rawResp.substring(0, index - 2) + "}]");
-  return JSON.parse(rawResp);
+  return JSON.parse(rawResp.substring(0, index - 2) + "}]");
 }
 
 export async function callAI(prompt: string) {
@@ -33,8 +32,9 @@ export async function callAI(prompt: string) {
 
     if (
       isString(res.data) &&
-      res.data[res.data.length] !== "]" &&
-      res.data[res.data.length - 1] !== "}"
+      res.data[res.data.length] !== '"' &&
+      res.data[res.data.length - 1] !== "]" &&
+      res.data[res.data.length - 2] !== "}"
     ) {
       console.log("isString TRUE");
 
