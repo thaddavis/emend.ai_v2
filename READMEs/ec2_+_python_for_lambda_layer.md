@@ -22,4 +22,5 @@ If debugging is needed: `ssh -i "ai.pem" ec2-user@ec2-18-212-10-89.compute-1.ama
 
 - After scp'ing the file from EC2 rename the folder holding all the packages to be `python`
 - Zip it and add it as a Lambda layer in your AWS account
-- $PROJECT_ROOT/python.zip is the layer that was generated on 4-24-2023
+- $PROJECT_ROOT/python.zip is the layer that was generated on 4-24-2023 for the `$PROJECT_ROOT/aws_lambda/open_ai_lambda.py` function
+- $PROJECT_ROOT/nodejs.zip is the layer that was generated on 4-24-2023 for the `$PROJECT_ROOT/aws_lambda/page_handler_lambda.js` function
