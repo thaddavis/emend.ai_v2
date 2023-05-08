@@ -6,10 +6,8 @@ import isString from "lodash/isString";
 import { toast } from "react-toastify";
 
 function cleanOverflow(rawResp: string) {
-  console.log("rawResp", rawResp);
+  rawResp.trim();
   const index = rawResp.lastIndexOf("{");
-
-  // console.log("-_-", rawResp.substring(0, index - 2) + "}]");
   return JSON.parse(rawResp.substring(0, index - 2) + "}]");
 }
 
@@ -20,7 +18,8 @@ export async function callAI(prompt: string) {
     };
     var config = {
       method: "post",
-      url: "https://s1vpd61w24.execute-api.us-east-1.amazonaws.com/queryAI-v2",
+      // url: "https://s1vpd61w24.execute-api.us-east-1.amazonaws.com/queryAI-v2",
+      url: "http://localhost:5000",
       headers: {
         "Content-Type": "application/json",
       },
@@ -29,19 +28,20 @@ export async function callAI(prompt: string) {
     let res = await axios(config);
 
     console.log("res", res);
+    console.log("res", res.data.body);
 
     if (
-      isString(res.data) &&
-      res.data[res.data.length] !== '"' &&
-      res.data[res.data.length - 1] !== "]" &&
-      res.data[res.data.length - 2] !== "}"
+      isString(res.data.body) &&
+      res.data.body[res.data.body.length] !== '"' &&
+      res.data.body[res.data.body.length - 1] !== "]" &&
+      res.data.body[res.data.body.length - 2] !== "}"
     ) {
       console.log("isString TRUE");
 
-      return cleanOverflow(res.data);
+      return cleanOverflow(res.data.body);
     } else {
       console.log("isString FALSE");
-      return JSON.parse(res.data);
+      return JSON.parse(res.data.body);
     }
   } catch (e) {
     console.error(e);

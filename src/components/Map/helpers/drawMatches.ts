@@ -71,7 +71,11 @@ export function drawMatches(
 
   // draw matches
   for (let i = 0; i < matches.length; i++) {
-    if (matches[i].blurb && matches[i].lat && matches[i].lat) {
+    if (
+      matches[i].blurb &&
+      matches[i].lat !== null &&
+      matches[i].lat !== null
+    ) {
       let lat = matches[i].lat;
       let lon = matches[i].lon;
       svg
